@@ -31,12 +31,12 @@ def init_menu(request, user_obj):
     menu_dict = {}
     for menu in user_menu_obj:
         # 判断是否为最外部
-        print(menu)
         if menu['menus__parent'] is None:
             parent_menu_format = {
                 'id': menu['menus__id'],
                 'name': menu['menus__name'],
                 'path': "/{}".format(menu['menus__path']),
+                'component': menu['menus__component'],
                 'redirect': 'noredirect',
                 'alwaysShow': True,
                 'meta': {

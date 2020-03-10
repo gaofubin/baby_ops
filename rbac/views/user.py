@@ -47,6 +47,7 @@ class UserInfoView(APIView):
         user_obj = UserProfile.objects.filter(username=token_info['username']).first()
         permission_list = init_permission(request, user_obj)
         menu_dict = init_menu(request, user_obj)
+        print(menu_dict)
         data = {
             'id': user_obj.id,
             'username': user_obj.username,
