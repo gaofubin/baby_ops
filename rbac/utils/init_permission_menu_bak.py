@@ -30,22 +30,37 @@ def init_menu(request, user_obj):
                                           'menus__parent').distinct()
     menu_dict = {}
     for menu in user_menu_obj:
-        # 判断是否为最外部
-        print(menu)
+        # 判断是否为父菜单
         if menu['menus__parent'] is None:
-            parent_menu_format = {
-                'id': menu['menus__id'],
-                'name': menu['menus__name'],
-                'path': "/{}".format(menu['menus__path']),
-                'redirect': 'noredirect',
-                'alwaysShow': True,
-                'meta': {
-                    'title': menu['menus__name'],
-                    'icon': menu['menus__icon']
-                },
-                'parent_id': menu['menus__parent'],
-                'children': []
-            }
+            # 判断是否是外部链接
+            if menu['menus__is_frame']:
+                parent_menu_format = {
+                    'id': menu['menus__id'],
+                    'path': menu['menus_path'],
+                    'component': 'Layout',
+                    'children': [{
+                        'path': menu['menus__path'],
+                        'meta': {
+                            'title': menu['menus__name'],
+                            'icon': menu['menus__icon']
+                        }
+                    }],
+                    'parent_id': menu['menus__parent']
+                }
+            else:
+                parent_menu_format = {
+                    'id': menu['menus__id'],
+                    'name': menu['menus__name'],
+                    'path': "/{}".format(menu['menus__path']),
+                    'redirect': 'noredirect',
+                    'alwaysShow': True,
+                    'meta': {
+                        'title': menu['menus__name'],
+                        'icon': menu['menus__icon']
+                    },
+                    'parent_id': menu['menus__parent'],
+                    'children': []
+                }
             menu_dict[menu['menus__id']] = parent_menu_format
         else:
             children_menu_format = {
@@ -62,21 +77,6 @@ def init_menu(request, user_obj):
                 'parent_id': menu['menus__parent'],
                 'children': []
             }
-            menu_dict[menu['menus__id']] = children_menu_format
-
-    children_id_list = []
-    for key, val in menu_dict.items():
-        parent_id = val['parent_id']
-        if parent_id:
-            children_id_list.append(key)
-            menu_dict[parent_id]['children'].append(val)
-
-    for children_id in children_id_list:
-        menu_dict.pop(children_id)
-
-
-    menu_list = []
-    for v in menu_dict.values():
-        menu_list.append(v)
-    return menu_list
+            menu_dict[menu['menus__parent']]['children'].append(children_menu_format)
+    return menu_dict
 

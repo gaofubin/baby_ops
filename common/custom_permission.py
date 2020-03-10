@@ -12,9 +12,9 @@ class CustomRbacPermission(BasePermission):
     自定义权限
     """
     def has_permission(self, request, view):
-        print(request.user.roles)
-        permission_list = request.user.roles.values('permission__method')
-        print(permission_list)
+        # print(request.user.roles)
+        # permission_list = request.user.roles.values('permission__method')
+        # print(permission_list)
 
         return True
 
