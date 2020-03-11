@@ -4,6 +4,7 @@
 # @File    : user.py
 # @Software: PyCharm
 
+import jwt
 from rest_framework.viewsets import ModelViewSet
 from rest_framework_jwt.utils import jwt_decode_handler
 from rest_framework.views import APIView
@@ -46,8 +47,7 @@ class UserInfoView(APIView):
         token_info = jwt_decode_handler(token)
         user_obj = UserProfile.objects.filter(username=token_info['username']).first()
         permission_list = init_permission(request, user_obj)
-        menu_dict = init_menu(request, user_obj)
-        print(menu_dict)
+        menu_list = init_menu(request, user_obj)
         data = {
             'id': user_obj.id,
             'username': user_obj.username,
@@ -56,7 +56,7 @@ class UserInfoView(APIView):
             'image': request._request._current_scheme_host + '/media/' + str(user_obj.image),
             'is_active': user_obj.is_active,
             'permission': permission_list,
-            'menus': menu_dict
+            'menus': menu_list
         }
         return JsonResponse(data=data, msg="success", code=200, status=status.HTTP_200_OK)
 
