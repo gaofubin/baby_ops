@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile, Role, Permission, Menu
+from rbac.models import UserProfile, Role, Permission, Menu
 from django.contrib.auth.admin import UserAdmin
 
 

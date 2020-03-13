@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
                 ('path', models.CharField(max_length=128, unique=True, verbose_name='菜单地址')),
                 ('icon', models.CharField(blank=True, max_length=128, null=True, verbose_name='图标')),
                 ('component', models.CharField(blank=True, max_length=128, null=True, verbose_name='组件')),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='rbac.Menu', verbose_name='父菜单')),
+                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='apps.rbac.Menu', verbose_name='父菜单')),
             ],
             options={
                 'verbose_name': '菜单',
@@ -49,8 +49,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=32, unique=True, verbose_name='角色')),
                 ('desc', models.CharField(blank=True, max_length=100, null=True, verbose_name='描述')),
-                ('menus', models.ManyToManyField(blank=True, to='rbac.Menu', verbose_name='菜单')),
-                ('permissions', models.ManyToManyField(blank=True, to='rbac.Permission', verbose_name='权限')),
+                ('menus', models.ManyToManyField(blank=True, to='apps.rbac.Menu', verbose_name='菜单')),
+                ('permissions', models.ManyToManyField(blank=True, to='apps.rbac.Permission', verbose_name='权限')),
             ],
             options={
                 'verbose_name': '角色',
@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(default='', max_length=32, verbose_name='姓名')),
                 ('image', models.ImageField(default='image/default.png', max_length=128, upload_to='avatar/%Y/%m/%d', verbose_name='头像')),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.Group', verbose_name='groups')),
-                ('roles', models.ManyToManyField(to='rbac.Role', verbose_name='角色')),
+                ('roles', models.ManyToManyField(to='apps.rbac.Role', verbose_name='角色')),
                 ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.Permission', verbose_name='user permissions')),
             ],
             options={

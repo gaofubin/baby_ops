@@ -4,8 +4,6 @@
 # @File    : user.py
 # @Software: PyCharm
 
-import jwt
-from rest_framework.viewsets import ModelViewSet
 from rest_framework_jwt.utils import jwt_decode_handler
 from rest_framework.views import APIView
 from rest_framework_jwt.settings import api_settings
@@ -15,7 +13,7 @@ from common.custom_viewset_base import CustomViewSet
 from common.custom_permission import CustomRbacPermission
 from rest_framework import status
 from rbac.models import UserProfile
-from ..serializers.user_serializer import UserProfileSerializer
+from apps.rbac.serializers.user_serializer import UserProfileSerializer
 from rbac.utils.init_permission_menu import init_permission, init_menu
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
